@@ -1,127 +1,201 @@
-# 🧠 Smart AI Knowledge Assistant
+# Smart AI Knowledge Assistant
 
-👉 [Give Your Feedback](https://forms.gle/BMUCLDHXT4m95QhV7)
+A document-based AI Knowledge Assistant built using Large Language Models (LLMs), Retrieval-Augmented Generation (RAG), LangChain, Google Gemini, and FAISS.
 
-A simple AI assistant built with **LangChain, Google Gemini, FAISS, and RAG**.
+Developed as a hands-on project during a 3-day Add-on Course on Large Language Models conducted by Evolve Robotics at Vimal Jyothi Engineering College.
 
-It can:
+## Overview
 
-* 📄 Answer questions from uploaded PDFs
-* 🔍 Retrieve relevant document information
-* 🕐 Get the current date and time
-* 💬 Maintain recent conversation history
-* 🧰 Use custom tools automatically
+The Smart AI Knowledge Assistant allows users to ask questions about information contained in PDF documents. It retrieves relevant content from the documents and uses Google Gemini to generate context-aware responses.
 
-## 🏗️ Architecture
+## Features
+
+- Ask questions about uploaded PDF documents
+- Extract and process PDF content
+- Split documents into manageable text chunks
+- Generate embeddings for document content
+- Store and search embeddings using FAISS
+- Retrieve relevant document information using RAG
+- Generate answers using Google Gemini
+- System date and time tool
+
+## Architecture
 
 ```text
 User
- ↓
+  |
+  v
 Gemini LLM
- ↓
+  |
+  v
 Tool Decision
- ├── document_search → Retriever → FAISS → PDF
- └── system_datetime → Current Date/Time
- ↓
+  |
+  +---- document_search
+  |          |
+  |          v
+  |       Retriever
+  |          |
+  |          v
+  |        FAISS
+  |          |
+  |          v
+  |      PDF Documents
+  |
+  +---- system_datetime
+             |
+             v
+       Current Date/Time
+  |
+  v
 Gemini LLM
- ↓
+  |
+  v
 Final Answer
-```
-
-## 📁 Project Structure
-
-```text
-project/
+RAG Pipeline
+PDF Documents
+      |
+      v
+PyPDFLoader
+      |
+      v
+Text Splitting
+      |
+      v
+Gemini Embeddings
+      |
+      v
+FAISS Vector Store
+      |
+      v
+Retriever
+      |
+      v
+Relevant Chunks
+      |
+      v
+Google Gemini
+      |
+      v
+Generated Answer
+Tech Stack
+Python
+LangChain
+Google Gemini
+FAISS
+PyPDF
+Python-dotenv
+Retrieval-Augmented Generation (RAG)
+Vector Embeddings
+Project Structure
+llm-knowledge-assistant/
+|
 ├── main.py
 ├── rag.py
 ├── tools.py
+├── rrrr.txt
 ├── requirements.txt
-├── .env
+├── README.md
+├── .gitignore
 └── documents/
-    └── *.pdf
-```
+Installation
 
-## 📦 Installation
+Clone the repository:
 
-```bash
-pip install -U \
-langchain \
-langchain-community \
-langchain-text-splitters \
-langchain-google-genai \
-faiss-cpu \
-pypdf \
-python-dotenv
-```
+git clone https://github.com/sujaaayyyyy/llm-knowledge-assistant.git
+cd llm-knowledge-assistant
 
-## 🔑 API Key
+Create a virtual environment:
 
-Create `.env`:
+python -m venv venv
 
-```env
-GOOGLE_API_KEY=your_api_key
-```
+Activate it on Windows:
 
-## ▶️ Run
+venv\Scripts\activate
 
-Place PDFs inside `documents/` and run:
+Install the dependencies:
 
-```bash
+pip install -r requirements.txt
+API Key Setup
+
+Create a .env file in the project root:
+
+GOOGLE_API_KEY=your_api_key_here
+
+Do not share or upload your API key.
+
+Adding Documents
+
+Create a documents folder in the project directory and place your PDF files inside it.
+
+documents/
+└── your_document.pdf
+Running the Application
+
+Run:
+
 python main.py
-```
+
+Then ask questions related to the information contained in your uploaded documents.
 
 Example:
 
-```text
 You: What is machine learning?
 
-AI: [Answer based on the uploaded PDF]
-```
+AI: [Answer generated using information retrieved from the PDF]
+Key Components
+Component	Purpose
+Google Gemini	Language model and embeddings
+LangChain	LLM application framework
+FAISS	Vector storage and similarity search
+PyPDF	PDF document processing
+Retriever	Retrieves relevant document chunks
+RAG	Provides relevant document context to the LLM
+Tools	Handles document search and system date/time
+Files
+File	Purpose
+main.py	Main AI assistant and conversation handling
+rag.py	PDF loading, text chunking, embeddings and FAISS
+tools.py	Custom tools used by the assistant
+requirements.txt	Python dependencies
+documents/	Local PDF knowledge base
+.env	Google Gemini API key
+Learning Outcomes
 
-## 🔄 RAG Pipeline
+Through this project, I gained practical experience with:
+
+Large Language Models (LLMs)
+Retrieval-Augmented Generation (RAG)
+Vector embeddings
+Vector databases and similarity search
+LangChain
+Google Gemini
+PDF document processing
+Building document-based AI applications
+Future Improvements
+Persistent FAISS index
+Web-based user interface
+Conversation memory
+Source and page citations
+Additional AI tools
+Support for multiple document formats
+Acknowledgement
+
+This project was developed as part of a 3-day Add-on Course on Large Language Models conducted by Evolve Robotics at Vimal Jyothi Engineering College.
+
+
+### Step 2 — Save
+
+Press:
+
+**Ctrl + S**
+
+Then check how it looks in VS Code's Markdown preview:
+
+**Ctrl + Shift + V**
+
+You should now see proper emojis/text instead of:
 
 ```text
-PDF
- ↓
-PyPDFLoader
- ↓
-Text Chunks
- ↓
-Gemini Embeddings
- ↓
-FAISS
- ↓
-Retriever
- ↓
-Relevant Chunks
- ↓
-Gemini
- ↓
-Answer
-```
-
-### Key Components
-
-* **Gemini** → LLM and embeddings
-* **FAISS** → Stores/searches vectors
-* **Retriever** → Retrieves relevant document chunks
-* **RAG** → Provides document context to the LLM
-* **Tools** → `document_search` and `system_datetime`
-
-## 📌 Files
-
-| File         | Purpose                                     |
-| ------------ | ------------------------------------------- |
-| `main.py`    | Main AI assistant and conversation handling |
-| `rag.py`     | PDF loading, chunking, embeddings and FAISS |
-| `tools.py`   | Custom tools                                |
-| `documents/` | PDF knowledge base                          |
-| `.env`       | API key                                     |
-
-## 🚀 Future Improvements
-
-* Save/load FAISS index
-* Web interface
-* Persistent memory
-* Source/page citations
-* More tools
+ðŸ§
+â†“
+â”œ
